@@ -14,4 +14,8 @@
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.37.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".env" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>
