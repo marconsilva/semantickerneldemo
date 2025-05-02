@@ -1,0 +1,15 @@
+name: semantickerneldemo
+metadata:
+  template: semantickerneldemo@1.0.0
+# services:
+#   semantickerneldemo:
+#     project: ./src
+#     language: dotnet
+#     host: appservice
+# infra:
+  provider: bicep
+  path: ./infra
+  module: main
+  parameters:
+    location: northeurope
+    environmentName: ${AZURE_ENV_NAME}

@@ -8,7 +8,7 @@
             "name": "C#: LightPlugin Demo Debug",
             "type": "dotnet",
             "request": "launch",
-            "projectPath": "${workspaceFolder}/src/LightPluginDemo/LightPluginDemo.csproj"
+            "projectPath": "${workspaceFolder}/src/Demo001_LightPluginDemo/LightPluginDemo.csproj"
         }
 
     ]
