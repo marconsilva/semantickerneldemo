@@ -13,9 +13,10 @@ Env.Load(dotenv);
 
 // Populate values from your OpenAI deployment
 var modelId = "gpt-4o";
-var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT");
-var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_KEY");
-
+var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ?? 
+    throw new ArgumentNullException("AZURE_OPENAI_ENDPOINT environment variable is not set");
+var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_KEY") ?? 
+    throw new ArgumentNullException("AZURE_OPENAI_KEY environment variable is not set");
 
 // Create a kernel with Azure OpenAI chat completion
 //Full list of Supported Connectors: https://learn.microsoft.com/en-us/semantic-kernel/get-started/supported-languages?pivots=programming-language-csharp
@@ -48,7 +49,10 @@ do {
     userInput = Console.ReadLine();
 
     // Add user input
-    history.AddUserMessage(userInput);
+    if (!string.IsNullOrEmpty(userInput))
+    {
+        history.AddUserMessage(userInput);
+    }
 
     // Get the response from the AI
     var result = await chatCompletionService.GetChatMessageContentAsync(

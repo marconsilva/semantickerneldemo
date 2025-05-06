@@ -5,9 +5,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!-- ignore CS1998 warnings -->
-    <NoWarn>CS1998</NoWarn>
-
+    <NoWarn>SKEXP0050</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,10 +13,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.2" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.48.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Plugins.Web" Version="1.48.0-alpha" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include=".env" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-
 </Project>

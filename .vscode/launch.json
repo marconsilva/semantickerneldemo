@@ -4,12 +4,58 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {
-            "name": "C#: LightPlugin Demo Debug",
+            "name": "C#: Demo001 - LightPlugin Demo Debug",
             "type": "dotnet",
             "request": "launch",
             "projectPath": "${workspaceFolder}/src/Demo001_LightPluginDemo/LightPluginDemo.csproj"
-        }
+        },
+        {
+            "name": "C#: Demo002 - Google Search",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Demo002_BuiltIn/GoogleTextSearch/GoogleTextSearch.csproj"
+        },
+        {
+            "name": "C#: Demo003 - Recipe Guide Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Demo003_AgenticRAG/RecipeGuide/RecipeGuide.csproj"
+        },
+        
+        {
+            "name": "C#: Demo004 - GitHub MCP Agent Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Demo003_AgenticRAG/RecipeGuide/RecipeGuide.csproj"
+        },
+        {
+            "name": "C#: Demo005 - MCP Server Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Demo004_MCP/MCPClientServer/MCPServer/MCPServer.csproj"
+        },
+        {
+            "name": "C#: Demo005 - MCP Client Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Demo004_MCP/MCPClientServer/MCPClient/MCPClient.csproj"
+        },
+        
+        {
+            "name": "C#: Demo006 - MultiAgent Plugins Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Demo005_Multi-Agent_Orchestration/AgentsAsPlugins/AgentsAsPlugins.csproj"
+        },
+        
+        {
+            "name": "C#: Demo007 - MultiAgent Chat Debug",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}/src/Demo005_Multi-Agent_Orchestration/MultiAgentChat/MultiAgentChat.csproj"
+        },
 
     ]
 }

@@ -5,20 +5,20 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!-- ignore CS1998 warnings -->
-    <NoWarn>CS1998</NoWarn>
-
+    <NoWarn>SKEXP0110,SKEXP0001</NoWarn> <!-- ignore SKEXP0110 SKEXP0001 warnings -->
   </PropertyGroup>
 
+  
   <ItemGroup>
     <PackageReference Include="DotNetEnv" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.2" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.48.0" />
+    <PackageReference Include="Microsoft.SemanticKernel.Agents.Core" Version="1.48.0" />
   </ItemGroup>
 
+  
   <ItemGroup>
     <None Include=".env" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-
 </Project>

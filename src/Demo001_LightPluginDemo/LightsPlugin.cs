@@ -7,10 +7,10 @@ public class LightsPlugin
    // Mock data for the lights
    private readonly List<LightModel> lights = new()
    {
-      new LightModel { Id = 1, Name = "Main Stage", IsOn = false },
-      new LightModel { Id = 2, Name = "Second Stage", IsOn = false },
-      new LightModel { Id = 3, Name = "Outside", IsOn = false },
-      new LightModel { Id = 4, Name = "Entrance", IsOn = true }
+      new LightModel { Id = 1, Name = "Main Stage", IsOn = false, Brightness = Brightness.Medium, Color = "#FFFFFF" },
+      new LightModel { Id = 2, Name = "Second Stage", IsOn = false, Brightness = Brightness.High, Color = "#FF0000" },
+      new LightModel { Id = 3, Name = "Outside", IsOn = false, Brightness = Brightness.Low, Color = "#FFFF00"  },
+      new LightModel { Id = 4, Name = "Entrance", IsOn = true, Brightness = Brightness.Low, Color = "#FFFF00"  },
    };
 
    [KernelFunction("get_lights")]
@@ -36,6 +36,40 @@ public class LightsPlugin
 
       return light;
    }
+
+   [KernelFunction("change_color")]
+   [Description("Changes the color of the light by passing the RGB color hex code")]
+   public async Task<LightModel?> ChangeColorAsync(int id, string rgbColor)
+   {
+      var light = lights.FirstOrDefault(light => light.Id == id);
+
+      if (light == null)
+      {
+         return null;
+      }
+
+      // Update the light with the new state
+      light.Color = rgbColor;
+
+      return light;
+   }
+
+   [KernelFunction("change_brightness")]
+   [Description("Changes the brightness value of the light")]
+   public async Task<LightModel?> ChangeBrightnessAsync(int id, Brightness brightness)
+   {
+      var light = lights.FirstOrDefault(light => light.Id == id);
+
+      if (light == null)
+      {
+         return null;
+      }
+
+      // Update the light with the new state
+      light.Brightness = brightness;
+
+      return light;
+   }
 }
 
 public class LightModel
@@ -44,8 +78,24 @@ public class LightModel
    public int Id { get; set; }
 
    [JsonPropertyName("name")]
-   public string Name { get; set; }
+   public required string Name { get; set; }
 
    [JsonPropertyName("is_on")]
    public bool? IsOn { get; set; }
+
+   [JsonPropertyName("brightness")]
+   public Brightness? Brightness { get; set; }
+
+   [JsonPropertyName("color")]
+   [Description("The color of the light with a hex code (ensure you include the # symbol)")]
+   public string? Color { get; set; }
+}
+
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum Brightness
+{
+   Low,
+   Medium,
+   High
 }
