@@ -97,6 +97,9 @@ ChatCompletionAgent agent = new ChatCompletionAgent()
     Arguments = new KernelArguments(executionSettings),
 };
 
+// Create a chat history agent thread
+AgentThread thread = new ChatHistoryAgentThread();
+
 Console.WriteLine("\n\nNew Lets see this as an agent.\n\n");
 Console.WriteLine("Second mode - Agent Mode Enabled");
 Console.WriteLine("Ask me anything about a GitHub repository, example:");
@@ -115,7 +118,7 @@ do {
     }
 
     // Respond to user input, invoking functions where appropriate.
-    ChatMessageContent response = await agent.InvokeAsync(userInput).FirstAsync();
+    ChatMessageContent response = await agent.InvokeAsync(userInput, thread).FirstAsync();
     Console.WriteLine($"\n\nResponse from GitHubAgent:\n{response.Content}");
 }while (!string.IsNullOrEmpty(userInput));
 Console.WriteLine("\n\nAgent Mode finished.\n\n");
