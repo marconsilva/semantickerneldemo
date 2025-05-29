@@ -29,7 +29,7 @@ var gitHubToken = Environment.GetEnvironmentVariable("GITHUB_PERSONAL_ACCESS_TOK
 var clientTransport = new StdioClientTransport(new StdioClientTransportOptions
 {
     Name = "MCPServer",
-    Command = "docker",
+    Command = "podman",
     Arguments = ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
     EnvironmentVariables = new() { { "GITHUB_PERSONAL_ACCESS_TOKEN", gitHubToken } },
 });
@@ -77,7 +77,7 @@ var agentPlugin = KernelPluginFactory.CreateFromFunctions("GitHubAgentPlugin",
             Description = "Agent to invoke for reading and listing GitHub issues",
             Kernel = issueReaderKernel,
             Arguments = new KernelArguments(new PromptExecutionSettings()
-                { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() }),
+                { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto(options: new () { RetainArgumentTypes = true } ) }),
         }),
 
         AgentKernelFunctionFactory.CreateFromAgent(new ChatCompletionAgent()
@@ -90,7 +90,7 @@ var agentPlugin = KernelPluginFactory.CreateFromFunctions("GitHubAgentPlugin",
             Description = "Agent to invoke for reading files, creating branches, and managing code in GitHub repositories",
             Kernel = codeWriterKernel,
             Arguments = new KernelArguments(new PromptExecutionSettings()
-                { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() }),
+                { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto(options: new () { RetainArgumentTypes = true } ) }),
         }),
 
         AgentKernelFunctionFactory.CreateFromAgent(new ChatCompletionAgent()
@@ -100,7 +100,7 @@ var agentPlugin = KernelPluginFactory.CreateFromFunctions("GitHubAgentPlugin",
             Description = "Agent to invoke for creating and reviewing pull requests",
             Kernel = pullRequestKernel,
             Arguments = new KernelArguments(new PromptExecutionSettings()
-                { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() }),
+                { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto(options: new () { RetainArgumentTypes = true } )}),
         })
     ]);
 
@@ -122,7 +122,7 @@ Always explain what you're doing and coordinate the workflow logically. For comp
 Be resilient - if an agent fails, try multiple times or instruct the agents properly and retry.",
     Kernel = mainKernel,
     Arguments = new KernelArguments(new PromptExecutionSettings() 
-        { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto() }),
+        { FunctionChoiceBehavior = FunctionChoiceBehavior.Auto(options: new () { RetainArgumentTypes = true } ) }),
 };
 
 // Create conversation state
