@@ -136,6 +136,7 @@ Console.WriteLine("\t- List issues in a repository");
 Console.WriteLine("\t- Create a new branch and add a file");
 Console.WriteLine("\t- Create a pull request");
 Console.WriteLine("Type 'exit' to end.\n");
+Console.WriteLine("\nDEMO Repo: jmnbc/contoso-foods\n");
 
 string? userInput;
 do
