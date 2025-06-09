@@ -6,7 +6,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo001_LightPluginDemo", "Demo001_LightPluginDemo", "{F1A1E001-9D5B-CCEC-CFC9-C749911D9571}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightPluginDemo", "src/Demo001_LightPluginDemo/LightPluginDemo.csproj", "{94EF3A12-9D5B-CCEC-CFC9-C749911D9571}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightPluginDemo", "src/Demo001_LightPluginDemo/c#/LightPluginDemo.csproj", "{94EF3A12-9D5B-CCEC-CFC9-C749911D9571}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo002_BuiltIn", "Demo002_BuiltIn", "{F09F3C45-AD9B-08B0-1092-F884B6D6A5B5}"
 EndProject
@@ -31,10 +31,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentsAsPlugins", "src/Demo005_Multi-Agent_Orchestration/AgentsAsPlugins/AgentsAsPlugins.csproj", "{97A1096E-B7CA-4117-890E-F032D5E59EEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiAgentChat", "src/Demo005_Multi-Agent_Orchestration/MultiAgentChat/MultiAgentChat.csproj", "{3B33123E-A574-42D1-8EF2-E1BF2CE6EADD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalLightsDemo", "LocalLightsDemo\LocalLightsDemo.csproj", "{021A1287-7D7C-433D-8C59-9C5C6F2F9F20}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.AI.Foundry.Local", "Microsoft.AI.Foundry.Local\Microsoft.AI.Foundry.Local.csproj", "{AACA4E2C-A719-4AE4-B318-ECF10A25E4D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoderTeamMCP", "src\Demo004_MCP\CoderTeamMCP\CoderTeamMCP.csproj", "{853F1FAD-2BCD-4DE7-BB32-2150B3F85806}"
 EndProject
