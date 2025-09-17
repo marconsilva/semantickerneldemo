@@ -17,7 +17,8 @@ var dotenv = Path.Combine(root, ".env");
 Env.Load(dotenv);
 
 // Populate values from your OpenAI deployment
-var modelId = "gpt-4o";
+var modelId = Environment.GetEnvironmentVariable("AZURE_OPENAI_MODEL") ??
+               throw new ArgumentNullException("AZURE_OPENAI_MODEL environment variable is not set");
 var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
                throw new ArgumentNullException("AZURE_OPENAI_ENDPOINT environment variable is not set");
 var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_KEY") ??
@@ -31,7 +32,7 @@ var clientTransport = new StdioClientTransport(new StdioClientTransportOptions
     Name = "MCPServer",
     Command = "podman",
     Arguments = ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
-    EnvironmentVariables = new() { { "GITHUB_PERSONAL_ACCESS_TOKEN", gitHubToken } },
+    EnvironmentVariables = new Dictionary<string, string?>() { { "GITHUB_PERSONAL_ACCESS_TOKEN", gitHubToken } },
 });
 
 var mcpClient = await McpClientFactory.CreateAsync(clientTransport);
@@ -136,7 +137,7 @@ Console.WriteLine("\t- List issues in a repository");
 Console.WriteLine("\t- Create a new branch and add a file");
 Console.WriteLine("\t- Create a pull request");
 Console.WriteLine("Type 'exit' to end.\n");
-Console.WriteLine("\nDEMO Repo: jmnbc/contoso-foods\n");
+Console.WriteLine("\nDEMO Repo: marconsilva/contoso-foods-demo\n");
 
 string? userInput;
 do

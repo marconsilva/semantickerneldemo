@@ -6,7 +6,6 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Agents;
 using Microsoft.SemanticKernel.Connectors.OpenAI;
 using ModelContextProtocol.Client;
-using ModelContextProtocol.Protocol.Transport;
 using DotNetEnv;
 using Microsoft.SemanticKernel.ChatCompletion;
 using OpenTelemetry;
@@ -24,8 +23,9 @@ var dotenv = Path.Combine(root, ".env");
 Env.Load(dotenv);
 
 // Populate values from your OpenAI deployment
-var modelId = "gpt-4o";
-var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ?? 
+var modelId = Environment.GetEnvironmentVariable("AZURE_OPENAI_MODEL") ??
+    throw new ArgumentNullException("AZURE_OPENAI_MODEL environment variable is not set");
+var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
     throw new ArgumentNullException("AZURE_OPENAI_ENDPOINT environment variable is not set");
 var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_KEY") ?? 
     throw new ArgumentNullException("AZURE_OPENAI_KEY environment variable is not set");
@@ -36,9 +36,9 @@ var gitHubToken = Environment.GetEnvironmentVariable("GITHUB_PERSONAL_ACCESS_TOK
 var clientTransport = new StdioClientTransport(new StdioClientTransportOptions
 {
     Name = "MCPServer",
-    Command = "npx",
-    Arguments = ["-y", "@modelcontextprotocol/server-github"],
-    EnvironmentVariables =  new() {{ "GITHUB_PERSONAL_ACCESS_TOKEN", gitHubToken }},
+    Command = "podman",
+    Arguments = ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
+    EnvironmentVariables = new Dictionary<string, string?>() { { "GITHUB_PERSONAL_ACCESS_TOKEN", gitHubToken } },
 });
 
 var mcpClient = await McpClientFactory.CreateAsync(clientTransport);
@@ -54,41 +54,6 @@ foreach (var tool in tools)
 // Create a kernel with Azure OpenAI chat completion
 //Full list of Supported Connectors: https://learn.microsoft.com/en-us/semantic-kernel/get-started/supported-languages?pivots=programming-language-csharp
 var builder = Kernel.CreateBuilder().AddAzureOpenAIChatCompletion(modelId, endpoint, apiKey);
-
-// var resourceBuilder = ResourceBuilder
-//     .CreateDefault()
-//     .AddService("TelemetryConsoleQuickstart");
-
-// // Enable model diagnostics with sensitive data.
-// AppContext.SetSwitch("Microsoft.SemanticKernel.Experimental.GenAI.EnableOTelDiagnosticsSensitive", true);
-
-// using var traceProvider = Sdk.CreateTracerProviderBuilder()
-//     .SetResourceBuilder(resourceBuilder)
-//     .AddSource("Microsoft.SemanticKernel*")
-//     .AddConsoleExporter()
-//     .Build();
-
-// using var meterProvider = Sdk.CreateMeterProviderBuilder()
-//     .SetResourceBuilder(resourceBuilder)
-//     .AddMeter("Microsoft.SemanticKernel*")
-//     .AddConsoleExporter()
-//     .Build();
-
-// using var loggerFactory = LoggerFactory.Create(builder =>
-// {
-//     // Add OpenTelemetry as a logging provider
-//     builder.AddOpenTelemetry(options =>
-//     {
-//         options.SetResourceBuilder(resourceBuilder);
-//         options.AddConsoleExporter();
-//         // Format log messages. This is default to false.
-//         options.IncludeFormattedMessage = true;
-//         options.IncludeScopes = true;
-//     });
-//     builder.SetMinimumLevel(LogLevel.Warning);
-// });
-
-//builder.Services.AddSingleton(loggerFactory);
 
 builder.Services.AddLogging(services => services.AddConsole().SetMinimumLevel(LogLevel.Warning));
 
@@ -158,9 +123,13 @@ do {
         userInput = null;
         break;
     }
-
+    
     // Respond to user input, invoking functions where appropriate.
-    ChatMessageContent response = await agent.InvokeAsync(userInput, thread).FirstAsync();
-    Console.WriteLine($"\n\nResponse from GitHubAgent:\n{response.Content}");
+    var agentResponses = agent.InvokeAsync(userInput, thread);
+
+    await foreach (var agentResponse in agentResponses)
+    {
+        Console.WriteLine($"\n\nResponse from GitHubAgent:\n{agentResponse.Message.Content}");
+    }
 }while (!string.IsNullOrEmpty(userInput));
 Console.WriteLine("\n\nAgent Mode finished.\n\n");
